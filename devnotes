@@ -1,0 +1,77 @@
+Basics:
+    Scoreboard can be initialized with dummy players to act as memory addresses
+        scoreboard objectives add Memory dummy
+    Creating and writing to memory addresses is as follows:
+        Creating (with empty-ish val: as 0): scoreboard players set Address1 Memory 0
+        Writing to address: scoreboard players set Address1 Memory 10
+    Compairing values to stored addresses:
+        "==" execute if score Address1 Memory matches 10 run say Address1 is 10
+        ">" "<" execute if score Player1 Score > Player2 Score run <command>
+    Iterative operations "-=" and "+=" are also supported:
+        scoreboard players add Player1 BlocksBroken 1
+        scoreboard players add Player2 BlocksBroken 1
+        scoreboard players operation Total BlocksBroken = Player1 BlocksBroken
+        scoreboard players operation Total BlocksBroken += Player2 BlocksBroken
+    Other arithmatic operations
+        #initialize
+        scoreboard players set Player1 MathOperations 10
+        scoreboard players set Player2 MathOperations 5
+
+        #add
+        scoreboard players operation Player1 MathOperations += Player2 MathOperations
+
+        #subtract
+        scoreboard players operation Player1 MathOperations -= Player2 MathOperations
+
+        #multiplication
+        scoreboard players operation Player1 MathOperations *= Player2 MathOperations
+
+        #division
+        scoreboard players operation Player1 MathOperations /= Player2 MathOperations
+
+    How to handle functions w parameters:
+        Function call is actuall an assignment which is set to the return of the function
+        the function parameters are assigned addresses which can be read from within the function
+
+    Use Tellraw for printing:
+        tellraw @a [{"text":"Player1's score is "}, {"score":{"name":"Player1","objective":"Test"}}]
+
+Compiler example:
+    let x = 5;
+    print(math(x));
+
+    function math(x) {
+        return x + 5 / 2;
+    }
+
+    Compiles to:
+
+    > main.mcfunction
+        #initialization
+        scoreboard objectives add Memory dummy                                              # initialize the memory
+        scoreboard players set addr_x Memory 0                                              # initialize x var (not assignment yet)
+        scoreboard players set addr_result_math_x Memory 0                                  # initialize math(x)'s return address
+        scoreboard players set addr_param_math_x Memory 0                                   # initialize math(x)'s parameter address (x)
+
+        #start running code
+        scoreboard objectives set addr_x Memory 5                                           # assign x it's value
+
+        #calling math function
+        scoreboard players set addr_param_math_x Memory = Memory addr_x                     # setting the function parameter address value to x
+        function dpname:functions/math                                                      # call math function (sets result to addr_result_math_x)
+        tellraw @a [{"score":{"name":"Memory","objective":"addr_result_math_x"}}]           # print value from math(x)'s return address
+
+    > math.mcfunction (function math(x))
+        #call initialization
+        scoreboard players set addr_math_numtoadd Memory 5                                  # 5 in x + 5 / 2
+        scoreboard players set addr_math_divisor Memory 2                                   # 2 in x + 5 / 2
+        scoreboard players set addr_result_math_x Memory 0                                  # the return mem address
+                                                                                            #x (passed in as param) stored in: scoreboard players set addr_param_math_x
+
+        #doing the math (sorted by p.e.m.d.a.s)
+        #5 / 2
+        scoreboard players set addr_math_dv_result Memory = 5                               # initialize var for first math op 5
+        scoreboard players set addr_math_dv_divisor Memory = 2                              # initialize divisor 2
+        scoreboard players operation addr_math_dv_result /= Memory addr_math_dv_divisor     # apply first math op (/2)
+        scoreboard players operation addr_math_dv_result += Memory addr_param_math_x        # apply second math op (+ x)
+        scoreboard players set addr_result_math_x = Memory addr_math_dv_result              # set return address value to result
