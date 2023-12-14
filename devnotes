@@ -79,3 +79,6 @@ Compiler example:
         scoreboard players operation addr_math_dv_result Memory /= addr_math_dv_divisor Memory      # apply first math op (/2)
         scoreboard players operation addr_math_dv_result Memory += addr_param_math_x Memory         # apply second math op (+ x)
         scoreboard players operation addr_result_math_x Memory = addr_math_dv_result Memory         # set return address value to result
+
+
+    Intermidiate: (JSON representation of the logic via operations and subops)
