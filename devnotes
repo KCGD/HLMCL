@@ -39,8 +39,28 @@ Basics:
     Use Tellraw for printing:
         tellraw @a [{"text":"Player1's score is "}, {"score":{"name":"Player1","objective":"Test"}}]
 
+
+iteration:
+
+
+arrays:
+    arrays can likely be created by assigning fixed length, then at compile time, register each position in array to an address and treat indexes as variable addresses
+    example:
+        int<3> list --> 0x1 0x2 0x3 (all zeros)
+        list[0] --> 0x1 (accessed the same way as variables)
+    Actually:
+        int declarations can be assumed to be int<1> because one value since compiler handles arrays and single values the same
+
+partial number dvision method:
+    https://stackoverflow.com/a/21078140/13307600
+
 IMPORTANT NOTES
     Scoreboard can ONLY store integers. floats need to be two addresses (number and remainder)
+    malloc seems impossible to implement (requires scoreboard creation via dynamic value), therefore recursion cannot be done.
+        Only available memory is the memory allocated at compile-time.
+        This prevents having more than one instance of a function running at any given time.
+        However: Iteration (for/while loops) and calling other functions from within functions should be doable
+    Scoreboard might support negative values natively. If so, signing is not nessicary :D
 
 Compiler example:
     int x = 5;
