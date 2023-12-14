@@ -29,7 +29,7 @@ Basics:
         #multiplication
         scoreboard players operation Player1 MathOperations *= Player2 MathOperations
 
-        #division
+        #division (THIS IS INTEGER DIVISION. ONLY USE WITH INTS, react to //)
         scoreboard players operation Player1 MathOperations /= Player2 MathOperations
 
     How to handle functions w parameters:
@@ -40,11 +40,11 @@ Basics:
         tellraw @a [{"text":"Player1's score is "}, {"score":{"name":"Player1","objective":"Test"}}]
 
 Compiler example:
-    let x = 5;
+    int x = 5;
     print(math(x));
 
     function math(x) {
-        return x + 5 / 2;
+        return x + 5 // 2;
     }
 
     Compiles to:
