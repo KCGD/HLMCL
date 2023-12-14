@@ -39,6 +39,9 @@ Basics:
     Use Tellraw for printing:
         tellraw @a [{"text":"Player1's score is "}, {"score":{"name":"Player1","objective":"Test"}}]
 
+IMPORTANT NOTES
+    Scoreboard can ONLY store integers. floats need to be two addresses (number and remainder)
+
 Compiler example:
     int x = 5;
     print(math(x));
