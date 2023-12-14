@@ -60,6 +60,9 @@ IMPORTANT NOTES
         Only available memory is the memory allocated at compile-time.
         This prevents having more than one instance of a function running at any given time.
         However: Iteration (for/while loops) and calling other functions from within functions should be doable
+    [MALLOC EDIT]:
+        A workaround MIGHT be possible with this command: execute as [dummy player from scoreboard] run scoreboard players remove @s scoreboard 25
+        might be able to set new name as dummy player name and substitute in with @s
     Scoreboard might support negative values natively. If so, signing is not nessicary :D
 
 Compiler example:
