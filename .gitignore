@@ -1,7 +1,9 @@
 node_modules/
 Build/
-*.js
+Dist/
+src/**/*.js
 .vars
 .bin
+.native/node_modules/
 yarn.lock
 package-lock.json

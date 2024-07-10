@@ -14,10 +14,10 @@ else
 fi
 
 #node definitions
-NODEVER="18.5.0"
+NODEVER="21.7.3"
 NODE="v$NODEVER-linux-$ARCH"
 NODEURL="https://nodejs.org/dist/v$NODEVER/node-$NODE.tar.xz"
-YARN="1.22.19"
+YARN="1.22.21"
 YARNURL="https://yarnpkg.com/downloads/$YARN/yarn-v$YARN.tar.gz"
 
 #paths
@@ -63,9 +63,13 @@ echo "Apply changes to PATH"
 echo "Install dependencies"
 yarn install
 
+#install native modules
+echo "Install native modules"
+cd .native && yarn install && cd ..
+
 #gyp rebuild
-echo "Running node-pty rebuild"
-yarn run gyp-rebuild > /dev/null 2>&1
+#echo "Running node-pty rebuild"
+#yarn run gyp-rebuild > /dev/null 2>&1
 
 #build program (if given flag)
 if [[ $* == *--build* ]]; then
@@ -78,5 +82,23 @@ if [[ $* == *--clean* ]]; then
     echo "Cleaning build"
     yarn run clean
 fi
+
+
+#packaging flags
+if [[ $* == *--pkg-arch* ]]; then
+    echo "Packaging for arch"
+    yarn pkg-arch
+fi
+
+if [[ $* == *--pkg-deb* ]]; then
+    echo "Packaging for debian"
+    yarn pkg-debian
+fi
+
+if [[ $* == *--pkg-all* ]]; then
+    echo "Packaging for all platforms"
+    yarn pkg-all
+fi
+
 
 echo "Done"

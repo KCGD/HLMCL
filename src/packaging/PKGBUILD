@@ -1,0 +1,15 @@
+pkgname=mcl
+pkgver=0.0.1
+pkgrel=0
+pkgdesc="Package description"
+arch=('x86_64' 'arm64' 'aarch64')
+license=('GPLv2')
+depends=()
+options=(!strip)
+makedepends=('curl' 'tar' 'gcc' 'python')
+
+package() {
+    cd ..
+    mkdir -pv "$pkgdir/usr/local/bin/"
+	cp -v ./mcl "$pkgdir/usr/local/bin/mcl"
+}

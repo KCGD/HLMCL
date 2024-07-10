@@ -1,29 +1,34 @@
 {
-  "name": "newproject",
-  "version": "1.0.0",
+  "name": "mcl",
+  "version": "0.0.1",
   "description": "",
   "main": "src/main.js",
   "scripts": {
-    "start": "yarn run tsc && echo \"--- START PROGRAM ---\" && node src/main",
-    "build": "yarn run tsc && yarn run pkg package.json -C Brotli",
-    "clean": "find ./src -name \"*.js\" -type f | while read file; do rm -v \"$file\"; done",
-    "package": "yarn install && yarn run build && yarn run clean"
+    "start": "yarn run tsc && yarn run backpack-cli && echo \"--- START PROGRAM ---\" && node src/main",
+    "build": "node scripts/build",
+    "clean": "find ./src -name \"*.js\" -type f | while read file; do rm -v \"$file\"; done; rm -v Build/executable.blob || true; git checkout sea-config.json || true",
+    "reset": "git clean -fdx && ./setup.sh --clean --build",
+    "reinstall": "rm -rv ./node_modules && rm -v ./yarn.lock && yarn install",
+    "add-native":"cd .native && yarn add ",
+    "remove-native":"cd .native && yarn remove",
+    "pkg-arch": "./scripts/package_arch.sh",
+    "pkg-debian": "./scripts/package_debian.sh",
+    "pkg-all": "yarn pkg-arch && yarn pkg-debian"
   },
   "author": "",
   "license": "GPL-2.0-only",
   "devDependencies": {
-    "@types/node": "^18.16.0",
-    "pkg": "^5.8.1",
-    "typescript": "^5.0.4",
     "@types/cli-color": "^2.0.2",
-    "cli-color": "^2.0.3"
+    "@types/node": "^20.12.7",
+    "cli-color": "^2.0.3",
+    "typescript": "^5.0.4",
+    "webpack": "^5.90.1"
   },
-  "pkg": {
-    "outputPath": "./Build",
-    "targets": ["linux"],
-    "assets": [
-      "./src/**/*"
-    ]
-  },
-  "bin": "./src/main.js"
+  "bin": "./src/bundle.js",
+  "dependencies": {
+    "backpack-cli": "git+https://github.com/KCGD/backpack-cli.git",
+    "constants": "^0.0.2",
+    "postject": "^1.0.0-alpha.6",
+    "webpack-cli": "^5.1.4"
+  }
 }

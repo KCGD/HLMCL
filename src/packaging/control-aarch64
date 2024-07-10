@@ -1,0 +1,10 @@
+Package: mcl
+Version: 0.0.1
+Section: base
+Priority: optional
+Architecture: arm64
+Depends: 
+Maintainer: Your Name <you@email.com>
+Description: Your package description
+ A really cool package!
+ 

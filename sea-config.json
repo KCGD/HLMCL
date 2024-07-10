@@ -1,0 +1,8 @@
+{
+  "main": "src/bundle.js",
+  "output": "Build/executable.blob",
+  "disableExperimentalSEAWarning": true,
+  "useSnapshot": false,
+  "useCodeCache": true,
+  "assets": {}
+}
